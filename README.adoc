@@ -3,6 +3,7 @@
 image:https://circleci.com/gh/SpectoLabs/hoverfly-java.svg?style=shield["CircleCI", link="https://circleci.com/gh/SpectoLabs/hoverfly-java"]
 image:https://readthedocs.org/projects/hoverfly-java/badge/?version=latest["Read the Docs", link="https://hoverfly-java.readthedocs.io/en/latest/"]
 image:https://codecov.io/gh/spectolabs/hoverfly-java/branch/master/graph/badge.svg["Codecov", link="https://codecov.io/gh/spectolabs/hoverfly-java"]
+image:https://snyk.io/test/github/SpectoLabs/hoverfly-java/badge.svg?targetFile=build.gradle["Known Vulnerabilities", link="https://snyk.io/test/github/SpectoLabs/hoverfly-java?targetFile=build.gradle"]
 image:https://img.shields.io/maven-central/v/io.specto/hoverfly-java.svg["Maven Central", link="https://mvnrepository.com/artifact/io.specto/hoverfly-java"]
 
 A Java native language binding for http://hoverfly.io/[Hoverfly^], a Go proxy which allows you to simulate http services in your unit tests. Another term
