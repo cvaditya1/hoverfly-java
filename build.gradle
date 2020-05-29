@@ -31,7 +31,6 @@ dependencies {
         jacksonVersion = '2.10.0'
     }
 
-    compile 'junit:junit:4.12'
     compile 'com.squareup.okhttp3:okhttp:3.12.0'
     compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
@@ -40,6 +39,7 @@ dependencies {
     compile 'org.zeroturnaround:zt-exec:1.10'
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'ch.qos.logback:logback-classic:1.2.3'
+    compileOnly 'junit:junit:4.12'
     testCompile 'com.sun.jersey:jersey-client:1.19.4'
     testCompile 'com.google.guava:guava:20.0'
     testCompile 'org.springframework:spring-web:4.3.20.RELEASE'

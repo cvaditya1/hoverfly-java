@@ -15,10 +15,15 @@ repositories {
 }
 
 dependencies {
+    ext {
+        testNgVersion = '6.14.3'
+    }
+
+    compileOnly "org.testng:testng:$testNgVersion"
     compile(rootProject) {
         exclude group: 'junit'
     }
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile "org.testng:testng:$testNgVersion"
     testCompile 'com.sun.jersey:jersey-client:1.19.4'
     testCompile 'org.springframework:spring-web:4.3.20.RELEASE'
     testCompile 'org.assertj:assertj-core:3.11.1'
@@ -32,7 +37,6 @@ dependencies {
     testCompile 'org.mockito:mockito-core:2.23.4'
     testCompile 'io.projectreactor.ipc:reactor-netty:0.7.12.RELEASE'
     testCompile 'io.projectreactor:reactor-test:3.2.3.RELEASE'
-    compile group: 'org.testng', name: 'testng', version: '6.14.3'
 }
 
 test {
