@@ -25,13 +25,10 @@ public class HoverflyRuleSslConfigurationTest {
 
     @ClassRule
     public static HoverflyRule hoverflyRule = HoverflyRule.inSimulationMode(
-        localConfigs()
-                .sslCertificatePath("ssl/ca.crt")
-                .sslKeyPath("ssl/ca.key")
-    );
+        localConfigs().caCert("ssl/ca.crt", "ssl/ca.key"));
 
     @Test
-    public void shouldBeAbleToCallHttpsServiceEndpointUsingSelfSignedCertificate() throws Exception {
+    public void shouldBeAbleToCallHttpsServiceEndpointUsingCustomCaCertificate() {
 
         // Given
         SimpleBooking booking = new SimpleBooking(1, "London", "Hong Kong", LocalDate.now());

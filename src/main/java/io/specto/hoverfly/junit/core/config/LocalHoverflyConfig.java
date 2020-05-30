@@ -27,9 +27,8 @@ import java.util.List;
  */
 public class LocalHoverflyConfig extends HoverflyConfig {
 
-    // TODO should be combined field?
-    private String sslCertificatePath;
-    private String sslKeyPath;
+    private String caCertPath;
+    private String caCertKeyPath;
     private boolean tlsVerificationDisabled;
     private boolean plainHttpTunneling;
     private LocalMiddleware localMiddleware;
@@ -40,26 +39,38 @@ public class LocalHoverflyConfig extends HoverflyConfig {
     private String binaryLocation;
 
     /**
-     * Sets the SSL certificate file for overriding default Hoverfly self-signed certificate
+     * Sets the certificate file to override the default Hoverfly's CA cert
      * The file can be in any PEM encoded certificate, in .crt or .pem extensions
      * @param sslCertificatePath certificate file in classpath
      * @return the {@link LocalHoverflyConfig} for further customizations
      */
+    @Deprecated
     public LocalHoverflyConfig sslCertificatePath(String sslCertificatePath) {
-        this.sslCertificatePath = sslCertificatePath;
-
+        this.caCertPath = sslCertificatePath;
         return this;
     }
 
-
     /**
-     * Sets the SSL key file for overriding default Hoverfly SSL key
+     * Sets the key file for Hoverfly's CA cert
      * The file can be in any PEM encoded key, in .key or .pem extensions
      * @param sslKeyPath key file in classpath
      * @return the {@link LocalHoverflyConfig} for further customizations
      */
+    @Deprecated
     public LocalHoverflyConfig sslKeyPath(String sslKeyPath) {
-        this.sslKeyPath = sslKeyPath;
+        this.caCertKeyPath = sslKeyPath;
+        return this;
+    }
+
+    /**
+     * Sets the certificate and key files to override the default Hoverfly's CA cert
+     * @param certPath certificate file in classpath. Must be a PEM encoded certificate, with .crt or .pem extensions
+     * @param keyPath key file in classpath. Must be any PEM encoded key, with .key or .pem extensions
+     * @return the {@link LocalHoverflyConfig} for further customizations
+     */
+    public LocalHoverflyConfig caCert(String certPath, String keyPath) {
+        this.caCertPath = certPath;
+        this.caCertKeyPath = keyPath;
         return this;
     }
 
@@ -152,8 +163,8 @@ public class LocalHoverflyConfig extends HoverflyConfig {
     public HoverflyConfiguration build() {
         HoverflyConfiguration configs = new HoverflyConfiguration(proxyPort, adminPort, proxyLocalHost, destination,
                 proxyCaCert, captureHeaders, webServer, hoverflyLogger, logLevel, statefulCapture, incrementalCapture, simulationPreprocessor);
-        configs.setSslCertificatePath(sslCertificatePath);
-        configs.setSslKeyPath(sslKeyPath);
+        configs.setSslCertificatePath(caCertPath);
+        configs.setSslKeyPath(caCertKeyPath);
         configs.setTlsVerificationDisabled(tlsVerificationDisabled);
         configs.setPlainHttpTunneling(plainHttpTunneling);
         configs.setLocalMiddleware(localMiddleware);

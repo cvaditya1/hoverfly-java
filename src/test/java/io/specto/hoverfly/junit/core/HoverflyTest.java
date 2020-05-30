@@ -347,9 +347,7 @@ public class HoverflyTest {
     @Test
     public void shouldNotSetJVMTrustStoreIfSslCertificatePathExists() {
         // Given
-        hoverfly = new Hoverfly(localConfigs()
-                .sslCertificatePath("ssl/ca.crt")
-                .sslKeyPath("ssl/ca.key"), SIMULATE);
+        hoverfly = new Hoverfly(localConfigs().caCert("ssl/ca.crt", "ssl/ca.key"), SIMULATE);
         SslConfigurer sslConfigurer = mock(SslConfigurer.class);
         Whitebox.setInternalState(hoverfly, "sslConfigurer", sslConfigurer);
 
@@ -411,9 +409,7 @@ public class HoverflyTest {
     @Test
     public void shouldCopySslCertAndKeyToTempFolderIfPresent () {
         // Given
-        hoverfly = new Hoverfly(localConfigs()
-                .sslCertificatePath("ssl/ca.crt")
-                .sslKeyPath("ssl/ca.key"), SIMULATE);
+        hoverfly = new Hoverfly(localConfigs().caCert("ssl/ca.crt", "ssl/ca.key"), SIMULATE);
         TempFileManager tempFileManager = spy(TempFileManager.class);
         Whitebox.setInternalState(hoverfly, "tempFileManager", tempFileManager);
 

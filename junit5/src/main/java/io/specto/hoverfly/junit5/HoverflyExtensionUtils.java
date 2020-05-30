@@ -29,8 +29,7 @@ class HoverflyExtensionUtils {
                 configs = remoteConfigs().host(config.remoteHost());
             } else {
                 configs = localConfigs()
-                        .sslCertificatePath(config.sslCertificatePath())
-                        .sslKeyPath(config.sslKeyPath())
+                        .caCert(config.caCertPath(), config.caCertKeyPath())
                         .upstreamProxy(config.upstreamProxy())
                         .logLevel(config.logLevel());
                 if (config.plainHttpTunneling()) {
