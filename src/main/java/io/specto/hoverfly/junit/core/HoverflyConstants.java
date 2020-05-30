@@ -11,7 +11,6 @@ public class HoverflyConstants {
 
     // Environment variable names
     public static final String HOVERFLY_AUTH_TOKEN = "HOVERFLY_AUTH_TOKEN";
-    public static final String HOVERFLY_PROXY_CA_CERT = "HOVERFLY_PROXY_CA_CERT";
 
     public static final String LOCALHOST = "localhost";
     public static final String HTTP = "http";

@@ -21,7 +21,7 @@ public class HoverflyRulePortConfigurationTest {
     public static HoverflyTestNG hoverflyTestNG = HoverflyTestNG.inSimulationMode(classpath("test-service.json"),
         localConfigs().proxyPort(EXPECTED_PROXY_PORT).adminPort(EXPECTED_ADMIN_PORT));
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Test
     public void shouldStillVirtualizeServiceAfterConfiguringPorts() {

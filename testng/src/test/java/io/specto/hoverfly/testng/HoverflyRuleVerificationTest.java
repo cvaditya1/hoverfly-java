@@ -3,8 +3,8 @@ package io.specto.hoverfly.testng;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.specto.hoverfly.junit.dsl.HttpBodyConverter;
 import io.specto.hoverfly.junit.verification.HoverflyVerificationError;
+import io.specto.hoverfly.models.SimpleBooking;
 import io.specto.hoverfly.testng.api.TestNGClassRule;
-import io.specto.hoverfly.testng.models.SimpleBooking;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +32,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 public class HoverflyRuleVerificationTest {
 
     private static final String NL = System.lineSeparator();
-    private RestTemplate restTemplate = new RestTemplate();
+    private static final SimpleBooking BOOKING = new SimpleBooking(1, "London", "Hong Kong", LocalDate.of(2017, 6, 29));
+    private final RestTemplate restTemplate = new RestTemplate();
 
-    private static SimpleBooking booking = new SimpleBooking(1, "London", "Hong Kong", LocalDate.of(2017, 6, 29));
 
     @TestNGClassRule
     public static HoverflyTestNG hoverflyRule = HoverflyTestNG.inSimulationMode(dsl(
@@ -43,10 +43,10 @@ public class HoverflyRuleVerificationTest {
                     .get("/api/bookings")
                     .queryParam("airline", contains("Pacific"))
                     .queryParam("page", any())
-                    .willReturn(success(json(booking)))
+                    .willReturn(success(json(BOOKING)))
 
                     .put("/api/bookings/1")
-                    .body(equalsToJson(json(booking)))
+                    .body(equalsToJson(json(BOOKING)))
                     .willReturn(success())
 
     )).printSimulationData();
@@ -85,7 +85,8 @@ public class HoverflyRuleVerificationTest {
 
         assertThat(bookFlightResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        hoverflyRule.verify(service("http://api-sandbox.flight.com").put("/api/bookings/1").header("Content-Type", any()).body(json(booking)));
+        hoverflyRule.verify(service("http://api-sandbox.flight.com").put("/api/bookings/1").header("Content-Type", any()).body(json(
+            BOOKING)));
     }
 
     @Test
@@ -161,7 +162,7 @@ public class HoverflyRuleVerificationTest {
     private ResponseEntity<String> putBooking() throws URISyntaxException, JsonProcessingException {
         RequestEntity<String> bookFlightRequest = RequestEntity.put(new URI("http://api-sandbox.flight.com/api/bookings/1"))
                 .contentType(APPLICATION_JSON)
-                .body(HttpBodyConverter.OBJECT_MAPPER.writeValueAsString(booking));
+                .body(HttpBodyConverter.OBJECT_MAPPER.writeValueAsString(BOOKING));
 
         return restTemplate.exchange(bookFlightRequest, String.class);
     }

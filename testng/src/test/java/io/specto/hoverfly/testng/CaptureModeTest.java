@@ -5,7 +5,7 @@ import com.google.common.io.Resources;
 import io.specto.hoverfly.junit.core.model.RequestResponsePair;
 import io.specto.hoverfly.junit.core.model.Simulation;
 import io.specto.hoverfly.testng.api.TestNGClassRule;
-import io.specto.hoverfly.testng.webserver.CaptureModeTestWebServer;
+import io.specto.hoverfly.webserver.CaptureModeTestWebServer;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -39,7 +39,7 @@ public class CaptureModeTest {
             localConfigs().captureAllHeaders().proxyLocalHost());
 
     private URI webServerBaseUrl;
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
     // We have to assert after the rule has executed because that's when the classpath is written to the filesystem
     @AfterTest

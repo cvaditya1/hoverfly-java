@@ -23,21 +23,18 @@ dependencies {
     compile(rootProject) {
         exclude group: 'junit'
     }
+    testCompile files(rootProject.sourceSets.test.output.classesDir)
     testCompile "org.testng:testng:$testNgVersion"
-    testCompile 'com.sun.jersey:jersey-client:1.19.4'
+    testCompile 'junit:junit:4.12'
     testCompile 'org.springframework:spring-web:4.3.20.RELEASE'
     testCompile 'org.assertj:assertj-core:3.11.1'
     testCompile 'org.skyscreamer:jsonassert:1.5.0'
     testCompile 'org.eclipse.jetty:jetty-server:9.3.11.v20160721'
-    testCompile 'org.apache.httpcomponents:httpclient:4.5.6'
     testCompile 'com.google.guava:guava:20.0'
-    testCompile 'net.javacrumbs.json-unit:json-unit:1.31.1'
-    testCompile 'net.javacrumbs.json-unit:json-unit-fluent:1.31.1'
-    testCompile 'com.github.stefanbirkner:system-rules:1.19.0'
     testCompile 'org.mockito:mockito-core:2.23.4'
-    testCompile 'io.projectreactor.ipc:reactor-netty:0.7.12.RELEASE'
-    testCompile 'io.projectreactor:reactor-test:3.2.3.RELEASE'
 }
+
+compileTestJava.dependsOn tasks.getByPath(':testClasses')
 
 test {
    useTestNG()

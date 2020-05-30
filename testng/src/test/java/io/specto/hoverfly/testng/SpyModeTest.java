@@ -24,7 +24,7 @@ public class SpyModeTest {
     @TestNGClassRule
     public static HoverflyTestNG hoverflyTestNG = HoverflyTestNG.inSpyMode(classpath("test-service.json"));
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Test
     public void shouldBeAbleToSimulate() throws Exception {

@@ -24,6 +24,7 @@ import static io.specto.hoverfly.junit.dsl.HoverflyDsl.service;
 import static io.specto.hoverfly.junit.dsl.ResponseCreators.success;
 import static org.assertj.core.api.Assertions.assertThat;
 
+// TODO remove dependency on JUnit
 @Listeners(HoverflyExecutor.class)
 public class DiffModeTest {
 

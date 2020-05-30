@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.specto.hoverfly.junit.core.model.RequestResponsePair;
 import io.specto.hoverfly.junit.core.model.Simulation;
 import io.specto.hoverfly.testng.api.TestNGRule;
-import io.specto.hoverfly.testng.webserver.CaptureModeTestWebServer;
+import io.specto.hoverfly.webserver.CaptureModeTestWebServer;
 import org.springframework.web.client.RestTemplate;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
