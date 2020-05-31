@@ -37,6 +37,9 @@ public class LocalHoverflyConfig extends HoverflyConfig {
     private LogLevel logLevel;
     private List<String> commands = new LinkedList<>();
     private String binaryLocation;
+    private String clientCertPath;
+    private String clientKeyPath;
+    private String clientAuthDestination;
 
     /**
      * Sets the certificate file to override the default Hoverfly's CA cert
@@ -107,7 +110,7 @@ public class LocalHoverflyConfig extends HoverflyConfig {
     /**
      * Set upstream proxy for hoverfly to connect to target host
      * @param proxyAddress socket address of the upstream proxy, eg. 127.0.0.1:8500
-     * @return the {@link HoverflyConfig} for further customizations
+     * @return the {@link LocalHoverflyConfig} for further customizations
      */
     public LocalHoverflyConfig upstreamProxy(InetSocketAddress proxyAddress) {
         this.upstreamProxy = proxyAddress.getHostString() + ":" + proxyAddress.getPort();
@@ -122,7 +125,7 @@ public class LocalHoverflyConfig extends HoverflyConfig {
     /**
      * Set the name of the logger to use when logging the output of the Hoverfly binary.
      * @param loggerName Name of the logger to use when logging the output of the Hoverfly binary.
-     * @return the {@link HoverflyConfig} for further customizations
+     * @return the {@link LocalHoverflyConfig} for further customizations
      */
     public LocalHoverflyConfig logger(final String loggerName) {
         this.hoverflyLogger = LoggerFactory.getLogger(loggerName);
@@ -131,7 +134,7 @@ public class LocalHoverflyConfig extends HoverflyConfig {
 
     /**
      * Change the Hoverfly binary to output directly to {@link System#out}.
-     * @return the {@link HoverflyConfig} for further customizations
+     * @return the {@link LocalHoverflyConfig} for further customizations
      */
     public LocalHoverflyConfig logToStdOut() {
         this.hoverflyLogger = null;
@@ -141,7 +144,7 @@ public class LocalHoverflyConfig extends HoverflyConfig {
     /**
      * Set the log level of Hoverfly. The default level is INFO.
      * @param logLevel {@link LogLevel} to set
-     * @return the {@link HoverflyConfig} for further customizations
+     * @return the {@link LocalHoverflyConfig} for further customizations
      */
     public LocalHoverflyConfig logLevel(LogLevel logLevel) {
         this.logLevel = logLevel;
@@ -151,11 +154,34 @@ public class LocalHoverflyConfig extends HoverflyConfig {
     /**
      * Set additional commands for starting Hoverfly.
      * @param commands More Hoverfly command flags.
-     * @return the {@link HoverflyConfig} for further customizations
+     * @return the {@link LocalHoverflyConfig} for further customizations
      */
     public LocalHoverflyConfig addCommands(String... commands) {
 
         this.commands.addAll(Arrays.asList(commands));
+        return this;
+    }
+
+    public HoverflyConfig binaryLocation(String binaryLocation) {
+        this.binaryLocation = binaryLocation;
+        return this;
+    }
+
+    /**
+     * Set client certificate and key for mutual TLS authentication with target server
+     * @param clientCertPath certificate file in classpath. Must be a PEM encoded certificate, with .crt or .pem extensions
+     * @param clientKeyPath key file in classpath. Must be any PEM encoded key, with .key or .pem extensions
+     * @param destinations the destination filter to what target urls to enable mutual TLS authentication. Enable for all remote hosts if not provided.
+     * @return the {@link LocalHoverflyConfig} for further customizations
+     */
+    public LocalHoverflyConfig clientAuth(String clientCertPath, String clientKeyPath, String... destinations) {
+        this.clientCertPath = clientCertPath;
+        this.clientKeyPath = clientKeyPath;
+        if (destinations.length == 0) {
+            this.clientAuthDestination = ".";
+        } else {
+            this.clientAuthDestination = String.join("|", destinations);
+        }
         return this;
     }
 
@@ -171,12 +197,10 @@ public class LocalHoverflyConfig extends HoverflyConfig {
         configs.setUpstreamProxy(upstreamProxy);
         configs.setCommands(commands);
         configs.setBinaryLocation(binaryLocation);
+        configs.setClientCertPath(clientCertPath);
+        configs.setClientKeyPath(clientKeyPath);
+        configs.setClientAuthDestination(clientAuthDestination);
         HoverflyConfigValidator validator = new HoverflyConfigValidator();
         return validator.validate(configs);
-    }
-
-    public HoverflyConfig binaryLocation(String binaryLocation) {
-        this.binaryLocation = binaryLocation;
-        return this;
     }
 }

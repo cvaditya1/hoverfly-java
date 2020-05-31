@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import static io.specto.hoverfly.junit.core.HoverflyConfig.localConfigs;
 import static io.specto.hoverfly.junit.core.HoverflyConfig.remoteConfigs;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 public class HoverflyConfigTest {
@@ -42,6 +43,9 @@ public class HoverflyConfigTest {
         assertThat(configs.isIncrementalCapture()).isFalse();
         assertThat(configs.getLogLevel()).isNotPresent();
         assertThat(configs.getHoverflyLogger()).isEqualTo(Optional.of(LoggerFactory.getLogger("hoverfly")));
+        assertThat(configs.getClientCertPath()).isNull();
+        assertThat(configs.getClientKeyPath()).isNull();
+        assertThat(configs.getClientAuthDestination()).isNull();
     }
 
     @Test
@@ -52,8 +56,6 @@ public class HoverflyConfigTest {
         assertThat(configs.getScheme()).isEqualTo("http");
         assertThat(configs.getAdminPort()).isEqualTo(8888);
         assertThat(configs.getProxyPort()).isEqualTo(8500);
-        assertThat(configs.getSslCertificatePath()).isNull();
-        assertThat(configs.getSslKeyPath()).isNull();
 
         assertThat(configs.isRemoteInstance()).isTrue();
         assertThat(configs.isProxyLocalHost()).isFalse();
@@ -202,4 +204,27 @@ public class HoverflyConfigTest {
 
         assertThat(configs.getDestination()).isEqualTo("foo.com|bar.com");
     }
+
+    @Test
+    public void shouldSetClientAuth() {
+        HoverflyConfiguration configs = localConfigs()
+            .clientAuth("ssl/cert.pem", "ssl/key.pem")
+            .build();
+
+        assertThat(configs.getClientCertPath()).isEqualTo("ssl/cert.pem");
+        assertThat(configs.getClientKeyPath()).isEqualTo("ssl/key.pem");
+        assertThat(configs.getClientAuthDestination()).isEqualTo(".");
+    }
+
+    @Test
+    public void shouldSetClientAuthWithDestinationFilter() {
+        HoverflyConfiguration configs = localConfigs()
+            .clientAuth("ssl/cert.pem", "ssl/key.pem", "foo.com", "bar.com")
+            .build();
+
+        assertThat(configs.getClientCertPath()).isEqualTo("ssl/cert.pem");
+        assertThat(configs.getClientKeyPath()).isEqualTo("ssl/key.pem");
+        assertThat(configs.getClientAuthDestination()).isEqualTo("foo.com|bar.com");
+    }
+
 }
