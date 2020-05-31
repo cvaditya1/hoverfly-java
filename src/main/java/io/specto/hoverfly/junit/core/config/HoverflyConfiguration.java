@@ -41,6 +41,9 @@ public class HoverflyConfiguration {
     private String binaryNameFormat;
     private List<String> commands;
     private String binaryLocation;
+    private String clientCertPath;
+    private String clientKeyPath;
+    private String clientAuthDestination;
 
     /**
      * Create configurations for external hoverfly
@@ -294,5 +297,29 @@ public class HoverflyConfiguration {
 
     public String getBinaryLocation() {
         return binaryLocation;
+    }
+
+    public String getClientCertPath() {
+        return clientCertPath;
+    }
+
+    public void setClientCertPath(String clientCertPath) {
+        this.clientCertPath = clientCertPath;
+    }
+
+    public String getClientKeyPath() {
+        return clientKeyPath;
+    }
+
+    public void setClientKeyPath(String clientKeyPath) {
+        this.clientKeyPath = clientKeyPath;
+    }
+
+    public String getClientAuthDestination() {
+        return clientAuthDestination;
+    }
+
+    public void setClientAuthDestination(String clientAuthDestination) {
+        this.clientAuthDestination = clientAuthDestination;
     }
 }

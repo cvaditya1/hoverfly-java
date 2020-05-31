@@ -110,4 +110,19 @@ public @interface HoverflyConfig {
      * Set Hoverfly log level
      */
     LogLevel logLevel() default LogLevel.INFO;
+
+    /**
+     * Client certificate file in classpath. Must be a PEM encoded certificate, with .crt or .pem extensions
+     */
+    String clientCertPath() default "";
+
+    /**
+     * Client key file in classpath. Must be a PEM encoded certificate, with .crt or .pem extensions
+     */
+    String clientKeyPath() default "";
+
+    /**
+     * Destination filter to what target urls to enable mutual TLS authentication.
+     */
+    String[] clientAuthDestination() default {};
 }
