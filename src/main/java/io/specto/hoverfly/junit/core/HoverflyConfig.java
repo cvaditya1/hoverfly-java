@@ -17,7 +17,6 @@ import io.specto.hoverfly.junit.core.config.HoverflyConfiguration;
 import io.specto.hoverfly.junit.core.config.LocalHoverflyConfig;
 import io.specto.hoverfly.junit.core.config.RemoteHoverflyConfig;
 import io.specto.hoverfly.junit.core.model.Simulation;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -87,11 +86,11 @@ public abstract class HoverflyConfig {
 
     /**
      * Sets destination filter to what target urls to simulate or capture
-     * @param destination the destination filter
+     * @param destinations the destination filter
      * @return the {@link HoverflyConfig} for further customizations
      */
-    public HoverflyConfig destination(String destination) {
-        this.destination = destination;
+    public HoverflyConfig destination(String... destinations) {
+        this.destination = String.join("|", destinations);
         return this;
     }
 

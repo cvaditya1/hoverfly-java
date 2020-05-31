@@ -49,7 +49,7 @@ class HoverflyConfigTest {
 
     @Nested
     @HoverflyCore(mode = HoverflyMode.SIMULATE, config = @HoverflyConfig(
-            proxyLocalHost = true, destination = "hoverfly.io", captureHeaders = {"Content-Type"},
+            proxyLocalHost = true, destination = {"hoverfly.io"}, captureHeaders = {"Content-Type"},
             plainHttpTunneling = true, disableTlsVerification = true, upstreamProxy = "localhost:5000",
             webServer = true, statefulCapture = true,
             simulationPreprocessor = CustomSimulationPreprocessor.class,

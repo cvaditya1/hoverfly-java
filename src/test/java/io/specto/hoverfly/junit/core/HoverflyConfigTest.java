@@ -195,4 +195,11 @@ public class HoverflyConfigTest {
 
         assertThat(configs.getLogLevel()).isEqualTo(Optional.of(LogLevel.DEBUG));
     }
+
+    @Test
+    public void shouldSetDestinations() {
+        HoverflyConfiguration configs = localConfigs().destination("foo.com", "bar.com").build();
+
+        assertThat(configs.getDestination()).isEqualTo("foo.com|bar.com");
+    }
 }

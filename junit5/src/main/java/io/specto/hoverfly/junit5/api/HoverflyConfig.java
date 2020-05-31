@@ -34,7 +34,7 @@ public @interface HoverflyConfig {
      * Use this destination filter to set which hostname to simulate or capture, for example setting this to "hoverfly.io"
      * will only simulate or capture requests to "hoverfly.io"
      */
-    String destination() default "";
+    String[] destination() default {};
 
     /**
      * By default Hoverfly does not capture any request headers, enable this flag to capture all headers
