@@ -14,13 +14,12 @@ package io.specto.hoverfly.junit.core.config;
 
 import io.specto.hoverfly.junit.core.Hoverfly;
 import io.specto.hoverfly.junit.core.HoverflyConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Config builder interface for settings specific to {@link Hoverfly} managed internally
@@ -40,6 +39,7 @@ public class LocalHoverflyConfig extends HoverflyConfig {
     private String clientCertPath;
     private String clientKeyPath;
     private String clientAuthDestination;
+    private String clientCaCertPath;
 
     /**
      * Sets the certificate file to override the default Hoverfly's CA cert
@@ -177,11 +177,23 @@ public class LocalHoverflyConfig extends HoverflyConfig {
     public LocalHoverflyConfig clientAuth(String clientCertPath, String clientKeyPath, String... destinations) {
         this.clientCertPath = clientCertPath;
         this.clientKeyPath = clientKeyPath;
-        if (destinations.length == 0) {
-            this.clientAuthDestination = ".";
-        } else {
-            this.clientAuthDestination = String.join("|", destinations);
+        if (destinations != null) {
+            if (destinations.length == 0) {
+                this.clientAuthDestination = ".";
+            } else {
+                this.clientAuthDestination = String.join("|", destinations);
+            }
         }
+        return this;
+    }
+
+    /**
+     * Set client CA certificate for mutual TLS authentication
+     * @param clientCaCertPath CA certificate file in classpath. Must be any PEM encoded certificate, with .crt or .pem extensions
+     * @return the {@link LocalHoverflyConfig} for further customizations
+     */
+    public LocalHoverflyConfig clientAuthCaCertPath(String clientCaCertPath) {
+        this.clientCaCertPath = clientCaCertPath;
         return this;
     }
 
@@ -200,6 +212,7 @@ public class LocalHoverflyConfig extends HoverflyConfig {
         configs.setClientCertPath(clientCertPath);
         configs.setClientKeyPath(clientKeyPath);
         configs.setClientAuthDestination(clientAuthDestination);
+        configs.setClientCaCertPath(clientCaCertPath);
         HoverflyConfigValidator validator = new HoverflyConfigValidator();
         return validator.validate(configs);
     }

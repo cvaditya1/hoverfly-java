@@ -18,6 +18,7 @@ import io.specto.hoverfly.junit.core.model.DelaySettings;
 import io.specto.hoverfly.junit.core.model.RequestFieldMatcher;
 import io.specto.hoverfly.junit.core.model.RequestResponsePair;
 import io.specto.hoverfly.junit.core.model.Simulation;
+import java.util.Optional;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -345,7 +346,7 @@ public class HoverflyTest {
     }
 
     @Test
-    public void shouldNotSetJVMTrustStoreIfSslCertificatePathExists() {
+    public void shouldConfigSslContextWithCustomCaCert() {
         // Given
         hoverfly = new Hoverfly(localConfigs().caCert("ssl/ca.crt", "ssl/ca.key"), SIMULATE);
         SslConfigurer sslConfigurer = mock(SslConfigurer.class);
@@ -356,6 +357,7 @@ public class HoverflyTest {
 
         // Then
         verify(sslConfigurer, never()).setDefaultSslContext();
+        verify(sslConfigurer).setDefaultSslContext("ssl/ca.crt");
     }
 
     @Test
@@ -419,6 +421,25 @@ public class HoverflyTest {
         // Then
         verify(tempFileManager).copyClassPathResource("ssl/ca.crt", "ca.crt");
         verify(tempFileManager).copyClassPathResource("ssl/ca.key", "ca.key");
+    }
+
+    @Test
+    public void shouldCopyClientCertAndKeyToTempFolderIfPresent () {
+        // Given
+        hoverfly = new Hoverfly(localConfigs()
+            .clientAuth("ssl/ca.crt", "ssl/ca.key")
+            .clientAuthCaCertPath("ssl/client-ca.crt")
+            , SIMULATE);
+        TempFileManager tempFileManager = spy(TempFileManager.class);
+        Whitebox.setInternalState(hoverfly, "tempFileManager", tempFileManager);
+
+        // When
+        hoverfly.start();
+
+        // Then
+        verify(tempFileManager).copyClassPathResource("ssl/ca.crt", "client-auth.crt");
+        verify(tempFileManager).copyClassPathResource("ssl/ca.key", "client-auth.key");
+        verify(tempFileManager).copyClassPathResource("ssl/client-ca.crt", "client-ca.crt");
     }
 
     @Test

@@ -65,7 +65,7 @@ public class SslConfigurer {
     }
 
     /**
-     * Sets the JVM trust store so Hoverfly's SSL certificate is trusted
+     * Sets the JVM trust store so Hoverfly's CA certificate is trusted
      */
     void setDefaultSslContext(String pemFilename) {
         setDefaultSslContext(findResourceOnClasspath(pemFilename));
@@ -82,7 +82,7 @@ public class SslConfigurer {
             SSLContext.setDefault(sslContext);
             HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
         } catch (Exception e) {
-            throw new IllegalStateException("Failed to set SSLContext from hoverfly certificate " + pemFile.toString(), e);
+            throw new IllegalStateException("Failed to import Hoverfly certificate '" + pemFile.toString() + "' into keystore", e);
         }
     }
 

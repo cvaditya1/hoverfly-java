@@ -125,4 +125,9 @@ public @interface HoverflyConfig {
      * Destination filter to what target urls to enable mutual TLS authentication.
      */
     String[] clientAuthDestination() default {};
+
+    /**
+     * Client CA certificate file in classpath. Must be a PEM encoded certificate, with .crt or .pem extensions
+     */
+    String clientCaCertPath() default "";
 }

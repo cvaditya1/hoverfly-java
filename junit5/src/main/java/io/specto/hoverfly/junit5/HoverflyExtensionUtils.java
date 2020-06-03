@@ -31,6 +31,7 @@ class HoverflyExtensionUtils {
                 configs = localConfigs()
                         .caCert(config.caCertPath(), config.caCertKeyPath())
                         .clientAuth(config.clientCertPath(), config.clientKeyPath(), config.clientAuthDestination())
+                        .clientAuthCaCertPath(config.clientCaCertPath())
                         .upstreamProxy(config.upstreamProxy())
                         .logLevel(config.logLevel());
                 if (config.plainHttpTunneling()) {
