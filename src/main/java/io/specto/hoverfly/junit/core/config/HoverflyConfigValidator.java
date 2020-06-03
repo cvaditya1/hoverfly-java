@@ -45,8 +45,16 @@ class HoverflyConfigValidator {
             boolean isKeyBlank = StringUtils.isBlank(hoverflyConfig.getSslKeyPath());
             boolean isCertBlank = StringUtils.isBlank(hoverflyConfig.getSslCertificatePath());
             if (isKeyBlank && !isCertBlank || !isKeyBlank && isCertBlank) {
-                throw new IllegalArgumentException("Both SSL key and certificate files are required to override the default Hoverfly SSL.");
+                throw new IllegalArgumentException("Both ca cert and key files are required to override the default Hoverfly ca cert.");
             }
+
+            // Validate client auth cert and key
+            boolean isClientKeyBlank = StringUtils.isBlank(hoverflyConfig.getClientKeyPath());
+            boolean isClientCertBlank = StringUtils.isBlank(hoverflyConfig.getClientCertPath());
+            if (isClientKeyBlank && !isClientCertBlank || !isClientKeyBlank && isClientCertBlank) {
+                throw new IllegalArgumentException("Both client cert and key files are required to enable mutual TLS authentication.");
+            }
+
             // Validate proxy port
             if (hoverflyConfig.getProxyPort() == 0) {
                 hoverflyConfig.setProxyPort(findUnusedPort());

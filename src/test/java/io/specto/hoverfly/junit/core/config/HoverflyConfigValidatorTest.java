@@ -42,18 +42,34 @@ public class HoverflyConfigValidatorTest {
     @Test
     public void shouldThrowExceptionIfOnlySslKeyIsConfigured() {
 
-        assertThatThrownBy(() -> localConfigs().sslKeyPath("ssl/ca.key").build())
+        assertThatThrownBy(() -> localConfigs().caCert("", "ssl/ca.key").build())
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Both SSL key and certificate files are required to override the default Hoverfly SSL");
+                .hasMessageContaining("Both ca cert and key files are required to override the default Hoverfly ca cert.");
     }
 
     @Test
     public void shouldThrowExceptionIfOnlySslCertIsConfigured() {
 
-        assertThatThrownBy(() -> localConfigs().sslCertificatePath("ssl/ca.crt").build())
+        assertThatThrownBy(() -> localConfigs().caCert("ssl/ca.crt", "").build())
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Both SSL key and certificate files are required to override the default Hoverfly SSL");
+                .hasMessageContaining("Both ca cert and key files are required to override the default Hoverfly ca cert.");
+    }
 
+
+    @Test
+    public void shouldThrowExceptionIfOnlyClientKeyIsConfigured() {
+
+        assertThatThrownBy(() -> localConfigs().clientAuth("", "ssl/ca.key").build())
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Both client cert and key files are required to enable mutual TLS authentication.");
+    }
+
+    @Test
+    public void shouldThrowExceptionIfOnlyClientCertIsConfigured() {
+
+        assertThatThrownBy(() -> localConfigs().clientAuth("ssl/ca.crt", "").build())
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Both client cert and key files are required to enable mutual TLS authentication.");
     }
 
     @Test
