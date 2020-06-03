@@ -44,6 +44,7 @@ public class HoverflyConfiguration {
     private String clientCertPath;
     private String clientKeyPath;
     private String clientAuthDestination;
+    private String clientCaCertPath;
 
     /**
      * Create configurations for external hoverfly
@@ -321,5 +322,13 @@ public class HoverflyConfiguration {
 
     public void setClientAuthDestination(String clientAuthDestination) {
         this.clientAuthDestination = clientAuthDestination;
+    }
+
+    public String getClientCaCertPath() {
+        return clientCaCertPath;
+    }
+
+    public void setClientCaCertPath(String clientCaCertPath) {
+        this.clientCaCertPath = clientCaCertPath;
     }
 }

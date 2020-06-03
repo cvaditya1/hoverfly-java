@@ -70,7 +70,6 @@ import static io.specto.hoverfly.junit.verification.HoverflyVerifications.times;
 /**
  * A wrapper class for the Hoverfly binary.  Manage the lifecycle of the processes, and then manage Hoverfly itself by using it's API endpoints.
  */
-// TODO extract interface and create LocalHoverfly and RemoteHoverfly
 public class Hoverfly implements AutoCloseable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Hoverfly.class);
@@ -195,6 +194,27 @@ public class Hoverfly implements AutoCloseable {
             commands.add("-key");
             commands.add("ca.key");
         }
+
+        if (StringUtils.isNotBlank(hoverflyConfig.getClientCertPath())) {
+            tempFileManager.copyClassPathResource(hoverflyConfig.getClientCertPath(), "client-auth.crt");
+            commands.add("-client-authentication-client-cert");
+            commands.add("client-auth.crt");
+        }
+        if (StringUtils.isNotBlank(hoverflyConfig.getClientKeyPath())) {
+            tempFileManager.copyClassPathResource(hoverflyConfig.getClientKeyPath(), "client-auth.key");
+            commands.add("-client-authentication-client-key");
+            commands.add("client-auth.key");
+        }
+        if (StringUtils.isNotBlank(hoverflyConfig.getClientAuthDestination())) {
+            commands.add("-client-authentication-destination");
+            commands.add(hoverflyConfig.getClientAuthDestination());
+        }
+        if (StringUtils.isNotBlank(hoverflyConfig.getClientCaCertPath())) {
+            tempFileManager.copyClassPathResource(hoverflyConfig.getClientCaCertPath(), "client-ca.crt");
+            commands.add("-client-authentication-ca-cert");
+            commands.add("client-ca.crt");
+        }
+
         if (hoverflyConfig.isPlainHttpTunneling()) {
             commands.add("-plain-http-tunneling");
         }

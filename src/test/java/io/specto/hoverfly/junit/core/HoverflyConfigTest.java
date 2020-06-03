@@ -46,6 +46,7 @@ public class HoverflyConfigTest {
         assertThat(configs.getClientCertPath()).isNull();
         assertThat(configs.getClientKeyPath()).isNull();
         assertThat(configs.getClientAuthDestination()).isNull();
+        assertThat(configs.getClientCaCertPath()).isNull();
     }
 
     @Test
@@ -212,7 +213,7 @@ public class HoverflyConfigTest {
             .build();
 
         assertThat(configs.getClientCertPath()).isEqualTo("ssl/cert.pem");
-        assertThat(configs.getClientKeyPath()).isEqualTo("ssl/key.pem");
+        assertThat(configs.getClientCertPath()).isEqualTo("ssl/cert.pem");
         assertThat(configs.getClientAuthDestination()).isEqualTo(".");
     }
 
@@ -225,6 +226,15 @@ public class HoverflyConfigTest {
         assertThat(configs.getClientCertPath()).isEqualTo("ssl/cert.pem");
         assertThat(configs.getClientKeyPath()).isEqualTo("ssl/key.pem");
         assertThat(configs.getClientAuthDestination()).isEqualTo("foo.com|bar.com");
+    }
+
+    @Test
+    public void shouldSetClientAuthCaCert() {
+        HoverflyConfiguration configs = localConfigs()
+            .clientAuthCaCertPath("ssl/ca.pem")
+            .build();
+
+        assertThat(configs.getClientCaCertPath()).isEqualTo("ssl/ca.pem");
     }
 
 }
