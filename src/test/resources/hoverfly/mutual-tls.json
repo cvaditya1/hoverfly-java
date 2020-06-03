@@ -1,0 +1,52 @@
+{
+  "data" : {
+    "pairs" : [ {
+      "request" : {
+        "path" : [ {
+          "matcher" : "exact",
+          "value" : "/"
+        } ],
+        "method" : [ {
+          "matcher" : "exact",
+          "value" : "GET"
+        } ],
+        "destination" : [ {
+          "matcher" : "exact",
+          "value" : "client.badssl.com"
+        } ],
+        "scheme" : [ {
+          "matcher" : "exact",
+          "value" : "https"
+        } ],
+        "body" : [ {
+          "matcher" : "exact",
+          "value" : ""
+        } ]
+      },
+      "response" : {
+        "status" : 200,
+        "body" : "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <link rel=\"shortcut icon\" href=\"/icons/favicon-green.ico\"/>\n  <link rel=\"apple-touch-icon\" href=\"/icons/icon-green.png\"/>\n  <title>client.badssl.com</title>\n  <link rel=\"stylesheet\" href=\"/style.css\">\n  <style>body { background: green; }</style>\n</head>\n<body>\n<div id=\"content\">\n  <h1 style=\"font-size: 12vw;\">\n    client.<br>badssl.com\n  </h1>\n</div>\n\n<div id=\"footer\">\n  This site requires a <a href=\"https://en.wikipedia.org/wiki/Transport_Layer_Security#Client-authenticated_TLS_handshake\">client-authenticated</a> TLS handshake.\n</div>\n\n</body>\n</html>\n",
+        "encodedBody" : false,
+        "templated" : false,
+        "headers" : {
+          "Cache-Control" : [ "no-store" ],
+          "Connection" : [ "keep-alive" ],
+          "Content-Type" : [ "text/html" ],
+          "Date" : [ "Wed, 03 Jun 2020 23:55:23 GMT" ],
+          "Etag" : [ "W/\"5e79513a-2af\"" ],
+          "Hoverfly" : [ "Was-Here" ],
+          "Last-Modified" : [ "Tue, 24 Mar 2020 00:15:54 GMT" ],
+          "Server" : [ "nginx/1.10.3 (Ubuntu)" ]
+        }
+      }
+    } ],
+    "globalActions" : {
+      "delays" : [ ]
+    }
+  },
+  "meta" : {
+    "schemaVersion" : "v5",
+    "hoverflyVersion" : "v1.1.5",
+    "timeExported" : "2020-06-04T00:55:23+01:00"
+  }
+}

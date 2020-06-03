@@ -170,7 +170,7 @@ public class LocalHoverflyConfig extends HoverflyConfig {
     /**
      * Set client certificate and key for mutual TLS authentication with target server
      * @param clientCertPath certificate file in classpath. Must be a PEM encoded certificate, with .crt or .pem extensions
-     * @param clientKeyPath key file in classpath. Must be any PEM encoded key, with .key or .pem extensions
+     * @param clientKeyPath key file in classpath. Must be unencrypted and PEM encoded key, with .key or .pem extensions
      * @param destinations the destination filter to what target urls to enable mutual TLS authentication. Enable for all remote hosts if not provided.
      * @return the {@link LocalHoverflyConfig} for further customizations
      */
