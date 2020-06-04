@@ -25,7 +25,7 @@ public class HoverflyRuleSslConfigurationTest {
 
     @ClassRule
     public static HoverflyRule hoverflyRule = HoverflyRule.inSimulationMode(
-        localConfigs().caCert("ssl/ca.crt", "ssl/ca.key"));
+        localConfigs().overrideDefaultCaCert("ssl/ca.crt", "ssl/ca.key"));
 
     @Test
     public void shouldBeAbleToCallHttpsServiceEndpointUsingCustomCaCertificate() {

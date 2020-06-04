@@ -18,7 +18,6 @@ import io.specto.hoverfly.junit.core.model.DelaySettings;
 import io.specto.hoverfly.junit.core.model.RequestFieldMatcher;
 import io.specto.hoverfly.junit.core.model.RequestResponsePair;
 import io.specto.hoverfly.junit.core.model.Simulation;
-import java.util.Optional;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -348,7 +347,7 @@ public class HoverflyTest {
     @Test
     public void shouldConfigSslContextWithCustomCaCert() {
         // Given
-        hoverfly = new Hoverfly(localConfigs().caCert("ssl/ca.crt", "ssl/ca.key"), SIMULATE);
+        hoverfly = new Hoverfly(localConfigs().overrideDefaultCaCert("ssl/ca.crt", "ssl/ca.key"), SIMULATE);
         SslConfigurer sslConfigurer = mock(SslConfigurer.class);
         Whitebox.setInternalState(hoverfly, "sslConfigurer", sslConfigurer);
 
@@ -411,7 +410,7 @@ public class HoverflyTest {
     @Test
     public void shouldCopySslCertAndKeyToTempFolderIfPresent () {
         // Given
-        hoverfly = new Hoverfly(localConfigs().caCert("ssl/ca.crt", "ssl/ca.key"), SIMULATE);
+        hoverfly = new Hoverfly(localConfigs().overrideDefaultCaCert("ssl/ca.crt", "ssl/ca.key"), SIMULATE);
         TempFileManager tempFileManager = spy(TempFileManager.class);
         Whitebox.setInternalState(hoverfly, "tempFileManager", tempFileManager);
 
@@ -427,7 +426,7 @@ public class HoverflyTest {
     public void shouldCopyClientCertAndKeyToTempFolderIfPresent () {
         // Given
         hoverfly = new Hoverfly(localConfigs()
-            .clientAuth("ssl/ca.crt", "ssl/ca.key")
+            .enableClientAuth("ssl/ca.crt", "ssl/ca.key")
             .clientAuthCaCertPath("ssl/client-ca.crt")
             , SIMULATE);
         TempFileManager tempFileManager = spy(TempFileManager.class);
