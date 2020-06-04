@@ -331,4 +331,8 @@ public class HoverflyConfiguration {
     public void setClientCaCertPath(String clientCaCertPath) {
         this.clientCaCertPath = clientCaCertPath;
     }
+
+    public boolean isClientAuthEnabled() {
+        return isNotBlank(clientCertPath) && isNotBlank(clientKeyPath) && isNotBlank(clientAuthDestination);
+    }
 }

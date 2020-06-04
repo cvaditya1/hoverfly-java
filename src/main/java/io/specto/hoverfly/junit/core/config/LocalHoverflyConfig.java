@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 public class LocalHoverflyConfig extends HoverflyConfig {
 
     private String caCertPath;
-    private String caCertKeyPath;
+    private String caKeyPath;
     private boolean tlsVerificationDisabled;
     private boolean plainHttpTunneling;
     private LocalMiddleware localMiddleware;
@@ -61,7 +61,7 @@ public class LocalHoverflyConfig extends HoverflyConfig {
      */
     @Deprecated
     public LocalHoverflyConfig sslKeyPath(String sslKeyPath) {
-        this.caCertKeyPath = sslKeyPath;
+        this.caKeyPath = sslKeyPath;
         return this;
     }
 
@@ -71,9 +71,9 @@ public class LocalHoverflyConfig extends HoverflyConfig {
      * @param keyPath key file in classpath. Must be any PEM encoded key, with .key or .pem extensions
      * @return the {@link LocalHoverflyConfig} for further customizations
      */
-    public LocalHoverflyConfig caCert(String certPath, String keyPath) {
+    public LocalHoverflyConfig overrideDefaultCaCert(String certPath, String keyPath) {
         this.caCertPath = certPath;
-        this.caCertKeyPath = keyPath;
+        this.caKeyPath = keyPath;
         return this;
     }
 
@@ -174,7 +174,7 @@ public class LocalHoverflyConfig extends HoverflyConfig {
      * @param destinations the destination filter to what target urls to enable mutual TLS authentication. Enable for all remote hosts if not provided.
      * @return the {@link LocalHoverflyConfig} for further customizations
      */
-    public LocalHoverflyConfig clientAuth(String clientCertPath, String clientKeyPath, String... destinations) {
+    public LocalHoverflyConfig enableClientAuth(String clientCertPath, String clientKeyPath, String... destinations) {
         this.clientCertPath = clientCertPath;
         this.clientKeyPath = clientKeyPath;
         if (destinations != null) {
@@ -202,7 +202,7 @@ public class LocalHoverflyConfig extends HoverflyConfig {
         HoverflyConfiguration configs = new HoverflyConfiguration(proxyPort, adminPort, proxyLocalHost, destination,
                 proxyCaCert, captureHeaders, webServer, hoverflyLogger, logLevel, statefulCapture, incrementalCapture, simulationPreprocessor);
         configs.setSslCertificatePath(caCertPath);
-        configs.setSslKeyPath(caCertKeyPath);
+        configs.setSslKeyPath(caKeyPath);
         configs.setTlsVerificationDisabled(tlsVerificationDisabled);
         configs.setPlainHttpTunneling(plainHttpTunneling);
         configs.setLocalMiddleware(localMiddleware);

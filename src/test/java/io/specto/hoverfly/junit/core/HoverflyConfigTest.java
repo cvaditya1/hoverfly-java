@@ -209,7 +209,7 @@ public class HoverflyConfigTest {
     @Test
     public void shouldSetClientAuth() {
         HoverflyConfiguration configs = localConfigs()
-            .clientAuth("ssl/cert.pem", "ssl/key.pem")
+            .enableClientAuth("ssl/cert.pem", "ssl/key.pem")
             .build();
 
         assertThat(configs.getClientCertPath()).isEqualTo("ssl/cert.pem");
@@ -220,7 +220,7 @@ public class HoverflyConfigTest {
     @Test
     public void shouldSetClientAuthWithDestinationFilter() {
         HoverflyConfiguration configs = localConfigs()
-            .clientAuth("ssl/cert.pem", "ssl/key.pem", "foo.com", "bar.com")
+            .enableClientAuth("ssl/cert.pem", "ssl/key.pem", "foo.com", "bar.com")
             .build();
 
         assertThat(configs.getClientCertPath()).isEqualTo("ssl/cert.pem");

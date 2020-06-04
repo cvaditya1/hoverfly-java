@@ -19,7 +19,7 @@ public class HoverflyRuleMutualTlsAuthenticationTest {
     @ClassRule
     public static HoverflyRule hoverflyRule = HoverflyRule.inCaptureOrSimulationMode(
         "mutual-tls.json",
-        localConfigs().clientAuth("ssl/client-auth.pem", "ssl/client-auth.key"));
+        localConfigs().enableClientAuth("ssl/client-auth.pem", "ssl/client-auth.key"));
 
     @Test
     public void shouldWorkWithTestServerRequiredClientCertificate() {

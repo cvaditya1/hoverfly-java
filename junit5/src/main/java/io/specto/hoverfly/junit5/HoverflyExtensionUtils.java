@@ -7,6 +7,7 @@ import io.specto.hoverfly.junit.core.config.LocalHoverflyConfig;
 import io.specto.hoverfly.junit5.api.HoverflyConfig;
 import io.specto.hoverfly.junit5.api.HoverflySimulate;
 import io.specto.hoverfly.junit5.api.UnsetSimulationPreprocessor;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.platform.commons.util.ReflectionUtils;
 
 import java.nio.file.Path;
@@ -29,11 +30,16 @@ class HoverflyExtensionUtils {
                 configs = remoteConfigs().host(config.remoteHost());
             } else {
                 configs = localConfigs()
-                        .caCert(config.caCertPath(), config.caCertKeyPath())
-                        .clientAuth(config.clientCertPath(), config.clientKeyPath(), config.clientAuthDestination())
-                        .clientAuthCaCertPath(config.clientCaCertPath())
                         .upstreamProxy(config.upstreamProxy())
                         .logLevel(config.logLevel());
+                if (StringUtils.isNotBlank(config.caCertPath()) || StringUtils.isNotBlank(config.caKeyPath())) {
+                    ((LocalHoverflyConfig) configs).overrideDefaultCaCert(config.caCertPath(), config.caKeyPath());
+                }
+                if (StringUtils.isNotBlank(config.clientCertPath()) || StringUtils.isNotBlank(config.clientKeyPath())) {
+                    ((LocalHoverflyConfig) configs)
+                        .enableClientAuth(config.clientCertPath(), config.clientKeyPath(), config.clientAuthDestination())
+                        .clientAuthCaCertPath(config.clientCaCertPath());
+                }
                 if (config.plainHttpTunneling()) {
                     ((LocalHoverflyConfig) configs).plainHttpTunneling();
                 }

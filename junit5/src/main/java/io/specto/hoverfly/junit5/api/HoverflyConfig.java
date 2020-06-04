@@ -64,14 +64,14 @@ public @interface HoverflyConfig {
     String sslKeyPath() default "";
 
     /**
-     * Custom CA certificate for Hoverfly {@link LocalHoverflyConfig#caCert(String, String)}
+     * Custom CA certificate for Hoverfly {@link LocalHoverflyConfig#overrideDefaultCaCert(String, String)}
      */
     String caCertPath() default "";
 
     /**
-     * Key for Hoverfly custom CA cert {@link LocalHoverflyConfig#caCert(String, String)}
+     * Key for Hoverfly custom CA cert {@link LocalHoverflyConfig#overrideDefaultCaCert(String, String)}
      */
-    String caCertKeyPath() default "";
+    String caKeyPath() default "";
 
     /**
      * External Hoverfly instance hostname {@link RemoteHoverflyConfig#host(String)}

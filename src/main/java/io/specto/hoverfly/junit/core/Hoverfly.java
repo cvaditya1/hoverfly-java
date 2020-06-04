@@ -195,24 +195,23 @@ public class Hoverfly implements AutoCloseable {
             commands.add("ca.key");
         }
 
-        if (StringUtils.isNotBlank(hoverflyConfig.getClientCertPath())) {
+        if (hoverflyConfig.isClientAuthEnabled()) {
             tempFileManager.copyClassPathResource(hoverflyConfig.getClientCertPath(), "client-auth.crt");
+            tempFileManager.copyClassPathResource(hoverflyConfig.getClientKeyPath(), "client-auth.key");
             commands.add("-client-authentication-client-cert");
             commands.add("client-auth.crt");
-        }
-        if (StringUtils.isNotBlank(hoverflyConfig.getClientKeyPath())) {
-            tempFileManager.copyClassPathResource(hoverflyConfig.getClientKeyPath(), "client-auth.key");
+
             commands.add("-client-authentication-client-key");
             commands.add("client-auth.key");
-        }
-        if (StringUtils.isNotBlank(hoverflyConfig.getClientAuthDestination())) {
+
             commands.add("-client-authentication-destination");
             commands.add(hoverflyConfig.getClientAuthDestination());
-        }
-        if (StringUtils.isNotBlank(hoverflyConfig.getClientCaCertPath())) {
-            tempFileManager.copyClassPathResource(hoverflyConfig.getClientCaCertPath(), "client-ca.crt");
-            commands.add("-client-authentication-ca-cert");
-            commands.add("client-ca.crt");
+
+            if (StringUtils.isNotBlank(hoverflyConfig.getClientCaCertPath())) {
+                tempFileManager.copyClassPathResource(hoverflyConfig.getClientCaCertPath(), "client-ca.crt");
+                commands.add("-client-authentication-ca-cert");
+                commands.add("client-ca.crt");
+            }
         }
 
         if (hoverflyConfig.isPlainHttpTunneling()) {

@@ -42,7 +42,7 @@ public class HoverflyConfigValidatorTest {
     @Test
     public void shouldThrowExceptionIfOnlySslKeyIsConfigured() {
 
-        assertThatThrownBy(() -> localConfigs().caCert("", "ssl/ca.key").build())
+        assertThatThrownBy(() -> localConfigs().overrideDefaultCaCert("", "ssl/ca.key").build())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Both ca cert and key files are required to override the default Hoverfly ca cert.");
     }
@@ -50,7 +50,7 @@ public class HoverflyConfigValidatorTest {
     @Test
     public void shouldThrowExceptionIfOnlySslCertIsConfigured() {
 
-        assertThatThrownBy(() -> localConfigs().caCert("ssl/ca.crt", "").build())
+        assertThatThrownBy(() -> localConfigs().overrideDefaultCaCert("ssl/ca.crt", "").build())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Both ca cert and key files are required to override the default Hoverfly ca cert.");
     }
@@ -59,7 +59,7 @@ public class HoverflyConfigValidatorTest {
     @Test
     public void shouldThrowExceptionIfOnlyClientKeyIsConfigured() {
 
-        assertThatThrownBy(() -> localConfigs().clientAuth("", "ssl/ca.key").build())
+        assertThatThrownBy(() -> localConfigs().enableClientAuth("", "ssl/ca.key").build())
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Both client cert and key files are required to enable mutual TLS authentication.");
     }
@@ -67,7 +67,7 @@ public class HoverflyConfigValidatorTest {
     @Test
     public void shouldThrowExceptionIfOnlyClientCertIsConfigured() {
 
-        assertThatThrownBy(() -> localConfigs().clientAuth("ssl/ca.crt", "").build())
+        assertThatThrownBy(() -> localConfigs().enableClientAuth("ssl/ca.crt", "").build())
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Both client cert and key files are required to enable mutual TLS authentication.");
     }

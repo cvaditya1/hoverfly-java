@@ -36,14 +36,18 @@ class HoverflyConfigTest {
             assertThat(configs.getCaptureHeaders()).isEmpty();
             assertThat(configs.getDestination()).isEmpty();
             assertThat(configs.getUpstreamProxy()).isEmpty();
-            assertThat(configs.getSslCertificatePath()).isEmpty();
-            assertThat(configs.getSslKeyPath()).isEmpty();
+            assertThat(configs.getSslCertificatePath()).isNull();
+            assertThat(configs.getSslKeyPath()).isNull();
             assertThat(configs.getHost()).isEqualTo("localhost");
             assertThat(configs.getScheme()).isEqualTo("http");
             assertThat(configs.isStatefulCapture()).isFalse();
             assertThat(configs.getSimulationPreprocessor()).isEmpty();
             assertThat(configs.getCommands()).isEmpty();
             assertThat(configs.getLogLevel()).isEqualTo(Optional.of(LogLevel.INFO));
+            assertThat(configs.getClientCertPath()).isNull();
+            assertThat(configs.getClientKeyPath()).isNull();
+            assertThat(configs.getClientAuthDestination()).isNull();
+            assertThat(configs.getClientCaCertPath()).isNull();
         }
     }
 
